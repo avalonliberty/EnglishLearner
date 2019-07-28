@@ -10,3 +10,18 @@ start serivce
 stop service
 ```
 'stop service' command allows you to turn off the autop push feature. Using it while you do not want to receive any message from the bot
+
+```
+add {vocabulary}
+```
+'add vocabulary' allows you to add a new vocabulary into your review list. For instance, the command, 'add plausible', will add the vocabulary, plausible, into your review list
+
+```
+check {vocabulary}
+```
+'check vocabulary' allows you to look up a word on the fly. For instance, For instance, the command, 'check plausible', will return the definitions of the word, plausible.
+
+```
+example {vocabulary}
+```
+'example vocabulary' allows you to the example sentences of the given word. For instance, the command, 'example plausible', will return the example sentences of the word, plausible.
