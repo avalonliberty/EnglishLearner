@@ -25,3 +25,6 @@ check {vocabulary}
 example {vocabulary}
 ```
 'example vocabulary' allows you to the example sentences of the given word. For instance, the command, 'example plausible', will return the example sentences of the word, plausible.
+
+## Bot QR code
+![QR code](Bot_QR.png)
