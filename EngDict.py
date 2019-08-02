@@ -32,7 +32,6 @@ class EngDictionary(object):
         checked_url = query + self.word
         word_holder = {"word" : self.word,
                        "content" : [],
-                       "day" : 1,
                        "insert_date" : str(date.today())}
         raw_text = requests.get(checked_url).text
         parsed_content = BeautifulSoup(raw_text, "html.parser")

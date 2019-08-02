@@ -31,6 +31,7 @@ with open("config", "r") as fileLink:
 db_ip = "172.19.0.3"
 db_port = "27017"
 selected_days = [1, 2, 3, 5, 8, 13, 21]
+source_github = 'https://github.com/avalonliberty/EnglishLearner'
 
 # show examples
 def show_examples(word, user_id):
@@ -51,7 +52,8 @@ def display_instructions(user_id):
     message += "2. 'stop service' for turning off auto push\n"
     message += "3. 'add {vocabulary}' for adding a new vocabulary\n"
     message += "4. 'check {vocabulary}' for looking up the vocabulary\n"
-    message += "try 'check apple' to gain more understanding of our operations"
+    message += "5. 'example {vocabulary}' for showing example sentences\n\n"
+    message += "If you need further instruction, please refet to " + source_github
     line_bot_api.push_message(user_id, TextSendMessage(text = message))
 
 # define the operation start service
@@ -147,6 +149,17 @@ def check_vocabulary(word, user_id):
         reply = content
         line_bot_api.push_message(user_id, TextSendMessage(text = reply))
 
+def record_command(user_id, command, action, timestamp):
+    client = pymongo.MongoClient("mongodb://" + db_ip + ":" + db_port)
+    sysDB = client["sysInfo"]
+    commandRecord = sysDB["commandRecord"]
+    commandDict = {'user_id' : user_id,
+                   'command' : command,
+                   'action' : action,
+                   'timestamp' : timestamp}
+    commandRecord.insert_one(commandDict)
+    client.close()
+
 # Channel Access Token
 line_bot_api = LineBotApi(token)
 # Channel Secret
@@ -211,6 +224,7 @@ def handle_message(event):
         elif action == "example":
             word = match.string.split()[1]
             show_examples(word, user_id)
+        record_command(user_id, match.string, action, timestamp)
     else:
         message = "Unknown operations"
         line_bot_api.push_message(user_id, TextSendMessage(text = message))
