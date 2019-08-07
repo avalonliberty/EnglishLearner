@@ -35,9 +35,8 @@ class EngDictionary(object):
                        "insert_date" : str(date.today())}
         raw_text = requests.get(checked_url).text
         parsed_content = BeautifulSoup(raw_text, "html.parser")
-        #self.__suggest_word(self.word, parsed_content)
         try:
-            words_section = parsed_content.find("div", {"class" : "content definitions cobuild am"})
+            words_section = parsed_content.select("div[class^='content definitions']")[0]
             def_section = words_section.findAll("div", {"class" : "hom"})
             for word_content in def_section:
                 if word_content.find("div", {"class" : "def"}):
